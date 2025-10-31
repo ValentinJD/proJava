@@ -1,4 +1,4 @@
-package ru.java.pro;
+package ru.java.pro.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
