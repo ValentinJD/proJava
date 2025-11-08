@@ -1,8 +1,6 @@
 package ru.java.pro.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.java.pro.dto.OrderDto;
 import ru.java.pro.dto.ProductDto;
 
@@ -19,6 +17,14 @@ public class OrderController {
         productDto.setId(1L);
         productDto.setName("Product");
         orderDto.setProducts(List.of(productDto));
+        return orderDto;
+    }
+
+    @PostMapping("/order")
+    public OrderDto saveOrder(@RequestBody OrderDto orderDto){
+        orderDto.setId(100L);
+        ProductDto productDto = orderDto.getProducts().get(0);
+        productDto.setId(1L);
         return orderDto;
     }
 }
