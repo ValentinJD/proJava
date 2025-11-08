@@ -24,25 +24,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static ru.java.pro.logging.LogUtil.extractBody;
+
 @Slf4j
 @Component
 public class ResponseBodyInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        logPreHandle(request, response, handler);
         return true; // Разрешить дальнейшую обработку запроса
+    }
+
+    private void logPreHandle(HttpServletRequest request, HttpServletResponse response, Object result) {
+        int statusCode = response.getStatus();
+        log.info("В интерцепторе logPreHandle Ответ: HTTP {} - {} result - {}", statusCode, request.getRequestURI(), result);
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            @Nullable ModelAndView mav) throws Exception {
-        logResponse(request, response, "result");
+
         // Для REST-запросов, скорее всего, mvc будет равен null, проверим наличие возвращаемого значения
         if (handler instanceof HandlerMethod) {
             HandlerMethod method = (HandlerMethod) handler;
             MethodParameter returnType = method.getReturnType();
             Class<?> returnClass = returnType.getParameterType();
 
+            logResponse(request, response, extractBody(request));
             // Проверяем, возвращает ли метод обычный объект (не View)
             if (!returnClass.equals(ModelAndView.class)) {
                 if (handler instanceof HandlerMethod) {
@@ -59,7 +68,6 @@ public class ResponseBodyInterceptor implements HandlerInterceptor {
 //                        List<Object> argsList = resolveArguments(hm, request, response);
                         // Получаем ссылку на исходный метод
 //                        Method method = hm.getMethod();
-
                         // Выполняем метод с соответствующими аргументами
 //                        Object result = targetMethod.invoke(method.getBean(), argsList.get(0));
                         // Регистрация результата
@@ -73,7 +81,7 @@ public class ResponseBodyInterceptor implements HandlerInterceptor {
 
     private void logResponse(HttpServletRequest request, HttpServletResponse response, Object result) {
         int statusCode = response.getStatus();
-        log.info("В интерцепторе Ответ: HTTP {} - {} result - {}", statusCode, request.getRequestURI(), result);
+        log.info("В интерцепторе postHandle Ответ: HTTP {} - {} result - {}", statusCode, request.getRequestURI(), result);
     }
 
 //    /**
@@ -116,7 +124,12 @@ public class ResponseBodyInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object
             handler, Exception ex) throws Exception {
         // Завершение обработки контроллера
-        logResponse(request, response, response.getStatus());
+        logAfterCompletion(request, response, response.getStatus());
+    }
+
+    private void logAfterCompletion(HttpServletRequest request, HttpServletResponse response, Object result) {
+        int statusCode = response.getStatus();
+        log.info("В интерцепторе afterCompletion Ответ: HTTP {} - {} result - {}", statusCode, request.getRequestURI(), result);
     }
 }
 
