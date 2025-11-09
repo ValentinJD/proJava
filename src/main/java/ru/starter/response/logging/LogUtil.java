@@ -1,4 +1,4 @@
-package ru.java.pro.logging;
+package ru.starter.response.logging;
 
 import jakarta.servlet.http.HttpServletRequest;
 

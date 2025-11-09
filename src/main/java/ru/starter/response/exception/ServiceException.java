@@ -1,4 +1,4 @@
-package ru.java.pro.exception;
+package ru.starter.response.exception;
 
 import lombok.Data;
 

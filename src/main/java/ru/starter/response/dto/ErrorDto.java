@@ -1,4 +1,4 @@
-package ru.java.pro.dto;
+package ru.starter.response.dto;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package ru.java.pro.exception;
+package ru.starter.response.exception;
 
 public enum Error {
    ERROR_001( "ERROR 001");

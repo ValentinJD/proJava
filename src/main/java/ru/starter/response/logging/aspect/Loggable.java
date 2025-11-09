@@ -1,4 +1,4 @@
-package ru.java.pro.logging.aspect;
+package ru.starter.response.logging.aspect;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

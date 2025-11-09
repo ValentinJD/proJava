@@ -1,7 +1,6 @@
-package ru.java.pro.logging.aspect;
+package ru.starter.response.logging.aspect;
 
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -9,14 +8,6 @@ import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import ru.java.pro.dto.OrderDto;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.stream.Collectors;
-
-import static ru.java.pro.logging.LogUtil.extractBody;
 
 @Component
 @Aspect
@@ -30,15 +21,12 @@ public class LoggingAspect {
         Object[] args = joinPoint.getArgs();
 
         for (Object arg : args) {
-            if (arg instanceof OrderDto request) {
-//                String body = extractBody(request);
-                logger.info("В аспекте Request to {} with body {}", request, request);
-            }
+            logger.info("В аспекте Request to {} with body {}", arg, arg);
         }
     }
 
     // Логируем после успешного завершения метода
-    @AfterReturning(pointcut="@annotation(Loggable)", returning="result")
+    @AfterReturning(pointcut = "@annotation(Loggable)", returning = "result")
     public void logResponse(Object result) {
         logger.info("В аспекте Response from endpoint is {}", result.toString());
     }

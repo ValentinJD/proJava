@@ -1,10 +1,10 @@
-package ru.java.pro.config;
+package ru.starter.response.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import ru.java.pro.logging.ResponseBodyInterceptor;
+import ru.starter.response.logging.ResponseBodyInterceptor;
 
 @Configuration
 public class InterceptorResponseConfig implements WebMvcConfigurer {

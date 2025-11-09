@@ -1,30 +1,17 @@
-package ru.java.pro.logging;
+package ru.starter.response.logging;
 
 import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.support.WebDataBinderFactory;
-import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.method.support.HandlerMethodArgumentResolverComposite;
-import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.method.annotation.ServletRequestDataBinderFactory;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import static ru.java.pro.logging.LogUtil.extractBody;
 
 @Slf4j
 @Component
@@ -51,7 +38,7 @@ public class ResponseBodyInterceptor implements HandlerInterceptor {
             MethodParameter returnType = method.getReturnType();
             Class<?> returnClass = returnType.getParameterType();
 
-            logResponse(request, response, extractBody(request));
+            logResponse(request, response, LogUtil.extractBody(request));
             // Проверяем, возвращает ли метод обычный объект (не View)
             if (!returnClass.equals(ModelAndView.class)) {
                 if (handler instanceof HandlerMethod) {

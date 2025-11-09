@@ -1,4 +1,4 @@
-package ru.java.pro.response;
+package ru.starter.response.response;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -7,10 +7,16 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-import ru.java.pro.dto.BaseResponse;
+import ru.starter.response.dto.BaseResponse;
 
 @ControllerAdvice
 public class BaseResponseBuilder implements ResponseBodyAdvice<Object> {
+
+    private final Boolean simpleResponse;
+
+    public BaseResponseBuilder(Boolean simpleResponse) {
+        this.simpleResponse = simpleResponse;
+    }
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
@@ -26,7 +32,7 @@ public class BaseResponseBuilder implements ResponseBodyAdvice<Object> {
                                   ServerHttpRequest request,
                                   ServerHttpResponse response) {
 
-        if(body instanceof BaseResponse){
+        if (simpleResponse) {
             return body;
         }
 
