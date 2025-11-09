@@ -12,6 +12,12 @@ import ru.java.pro.dto.BaseResponse;
 @ControllerAdvice
 public class BaseResponseBuilder implements ResponseBodyAdvice<Object> {
 
+    private final Boolean simpleResponse;
+
+    public BaseResponseBuilder(Boolean simpleResponse) {
+        this.simpleResponse = simpleResponse;
+    }
+
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         // Здесь определяем условия, когда применять обработку
@@ -26,7 +32,7 @@ public class BaseResponseBuilder implements ResponseBodyAdvice<Object> {
                                   ServerHttpRequest request,
                                   ServerHttpResponse response) {
 
-        if(body instanceof BaseResponse){
+        if (simpleResponse) {
             return body;
         }
 
