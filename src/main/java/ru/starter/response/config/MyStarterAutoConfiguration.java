@@ -1,12 +1,14 @@
 package ru.starter.response.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.starter.response.response.BaseResponseBuilder;
 
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Configuration
@@ -26,4 +28,18 @@ public class MyStarterAutoConfiguration {
                 .orElse(false);
         return new BaseResponseBuilder(isSimpleResponse);
     }
+
+    @Bean
+    @ConditionalOnProperty(prefix = "rquid-generator.bean", name = "enable", havingValue = "true")
+    public RqUidGenerator rquidGenerator() {
+        return new RqUidGenerator();
+    }
+
+    public class RqUidGenerator {
+        public String getRandom() {
+            return UUID.randomUUID().toString();
+        }
+    }
+
+
 }
