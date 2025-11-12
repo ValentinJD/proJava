@@ -1,19 +1,25 @@
-package ru.java.pro.controller;
+package com.help;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.java.pro.dto.OrderDto;
-import ru.java.pro.dto.ProductDto;
-import ru.java.pro.exception.ServiceException;
-import ru.java.pro.logging.aspect.Loggable;
+import ru.starter.response.config.MyStarterAutoConfiguration;
+import ru.starter.response.exception.ServiceException;
+import ru.starter.response.logging.aspect.Loggable;
+import ru.starter.response.response.BaseResponseBuilder;
 
 import java.util.List;
 
-import static ru.java.pro.exception.Error.ERROR_001;
+import static ru.starter.response.exception.Error.ERROR_001;
+
 
 @Slf4j
 @RestController
+@AllArgsConstructor
 public class OrderController {
+
+    private final BaseResponseBuilder baseResponseBuilder;
+    private final MyStarterAutoConfiguration.RqUidGenerator rqUidGenerator;
 
     @GetMapping("/order/{id}")
     public OrderDto getOrder(@PathVariable("id") Long id) {
@@ -30,6 +36,8 @@ public class OrderController {
     @Loggable
     @PostMapping("/order")
     public OrderDto saveOrder(@RequestBody OrderDto orderDto) {
+        String rqUidGeneratorRandom = rqUidGenerator.getRandom();
+        log.info("В контроллере {}", rqUidGeneratorRandom);
         validateOrder(orderDto);
         log.info("В контроллере saveOrder");
         orderDto.setId(100L);

@@ -8,19 +8,23 @@
 		<version>3.5.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>ru.response</groupId>
-	<artifactId>starter</artifactId>
+
+	<groupId>ru.java</groupId>
+	<artifactId>usestarter</artifactId>
 	<version>1.0.0</version>
 	<name>starter</name>
-	<description>Response Starter And Logging</description>
+
 
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-autoconfigure</artifactId>
+			<groupId>ru.starter.response</groupId>
+			<artifactId>response-spring-boot-starter</artifactId>
+			<scope>compile</scope>
+			<version>1.0.9</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -1,4 +1,8 @@
 
 response:
   type:
-    isSimpleResponse: false
+    is-simple-response: false
+
+rquid-generator:
+  bean:
+    enable: true

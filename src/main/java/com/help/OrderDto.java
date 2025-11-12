@@ -1,4 +1,4 @@
-package ru.java.pro.dto;
+package com.help;
 
 import lombok.Data;
 
