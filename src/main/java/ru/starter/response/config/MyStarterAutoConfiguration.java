@@ -4,13 +4,16 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import ru.starter.response.logging.ResponseBodyInterceptor;
 import ru.starter.response.response.BaseResponseBuilder;
 
 import java.util.Optional;
 import java.util.UUID;
 
 
+@ComponentScan("ru.starter.response")
 @Configuration
 @EnableConfigurationProperties(MyProperties.class)
 public class MyStarterAutoConfiguration {
@@ -30,6 +33,11 @@ public class MyStarterAutoConfiguration {
     }
 
     @Bean
+    public ResponseBodyInterceptor responseBodyInterceptor() {
+        return new ResponseBodyInterceptor();
+    }
+
+    @Bean
     @ConditionalOnProperty(prefix = "rquid-generator.bean", name = "enable", havingValue = "true")
     public RqUidGenerator rquidGenerator() {
         return new RqUidGenerator();
@@ -40,6 +48,5 @@ public class MyStarterAutoConfiguration {
             return UUID.randomUUID().toString();
         }
     }
-
 
 }
